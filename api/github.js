@@ -30,7 +30,6 @@ router.get( '/login', function( req, res ){
 
 router.post( '/logout', function( req, res ){
   if( req.session.oauth ){
-    //if( req.session.oauth.token ){ loggedIns[req.session.oauth.token] = false; }
     req.session.oauth = {};
   }
   res.contentType( 'application/json; charset=utf-8' );
@@ -60,7 +59,6 @@ router.get( '/callback', function( req, res ){
 
           req.session.oauth = {};
           req.session.oauth.token = access_token;
-          loggedIns[access_token] = { status: true };
 
           var r = await GetMyInfo( access_token );
           if( r ){

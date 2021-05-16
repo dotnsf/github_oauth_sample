@@ -32,6 +32,7 @@ $(function(){
     },
     error: function( e0, e1, e2 ){
       $('#logout_btn').css( 'display', 'none' );
+      $('#files_btn').css( 'display', 'none' );
     }
   });
 });
@@ -54,6 +55,26 @@ function my_logout(){
     });
   }
 }
+
+function list_files(){
+  $.ajax({
+    url: './api/files',
+    type: 'GET',
+    success: function( result ){
+      var ul = '<ul>';
+      result.forEach( function( f ){
+        var path = f.path;
+        var li = '<li>' + path + '</li>';
+        ul += li;
+      });
+      ul += '</ul>';
+      $('#info').html( ul );
+    },
+    error: function( e0, e1, e2 ){
+      $('#info').html( e0 + e1 + e2 );
+    }
+  });
+}
 </script>
 </head>
 <body>
@@ -67,6 +88,13 @@ function my_logout(){
     <button class="btn btn-primary" id="logout_btn" onClick="my_logout();" title="logout">logout</button>
   </ul>
 </nav>
+
+<div class="container">
+  <button class="btn btn-success" id="files_btn" onClick="list_files();">files</button>
+</div>
+
+<div class="container" id="info">
+</div>
 
 </body>
 </html>
